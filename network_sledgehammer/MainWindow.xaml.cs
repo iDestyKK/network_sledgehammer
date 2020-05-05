@@ -52,9 +52,7 @@ namespace Network_Sledgehammer {
 		}
 
 		internal enum WindowCompositionAttribute {
-			// ...
 			WCA_ACCENT_POLICY = 19
-			// ...
 		}
 
 		[DllImport("user32.dll")]
@@ -139,7 +137,7 @@ namespace Network_Sledgehammer {
 		// --------------------------------------------------------------------
 
 		public MainWindow() {
-            InitializeComponent();
+			InitializeComponent();
 
 			//Run any other setup functions needed
 			setup_tabs();
