@@ -11,7 +11,7 @@
         <!--
             Title Bar
         -->
-        
+
         <!-- Background -->
         <Rectangle Fill="#FF0D0D10" Height="32" VerticalAlignment="Top" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
 
@@ -37,7 +37,7 @@
                 </Style>
             </Button.Style>
         </Button>
-        
+
         <!-- Minimise Button Icon -->
         <Rectangle IsHitTestVisible="False" Fill="#FFF4F4F5" HorizontalAlignment="Right" Height="1" Margin="0,16,64,0" VerticalAlignment="Top" Width="10" RenderTransformOrigin="0.5,0.5">
             <Rectangle.RenderTransform>
@@ -71,7 +71,7 @@
                 </Style>
             </Button.Style>
         </Button>
-        
+
         <!-- Close Button Icon -->
         <Rectangle IsHitTestVisible="False" Fill="#FFF4F4F5" HorizontalAlignment="Right" Height="1" Margin="0,15,15,0" VerticalAlignment="Top" Width="14" RenderTransformOrigin="0.5,0.5">
             <Rectangle.RenderTransform>
@@ -106,30 +106,54 @@
             </Grid.ColumnDefinitions>
 
             <!-- Let it be resized (if you need that for some reason...) -->
-            <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" Background="#FF17171A" />
+            <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" Background="#EF17171A" />
 
             <!--
                 Left Side
             -->
-            
+
             <Rectangle Fill="#EF17171A" Width="Auto"/>
 
             <!-- Tabs -->
             <Rectangle Grid.Column="2" Fill="#FF17171A"/>
 
-            <Rectangle x:Name="rect_networks" Height="40" Margin="-8,12,12,0" VerticalAlignment="Top" Fill="#AF33333A" RadiusX="4" RadiusY="4" MouseDown="rect_networks_MouseDown"/>
+            <Rectangle x:Name="rect_networks" Height="40" Margin="-8,12,7,0" VerticalAlignment="Top" Fill="#AF33333A" RadiusX="4" RadiusY="4" MouseDown="rect_networks_MouseDown"/>
             <Label x:Name="label_networks" Content="Networks" Height="40" Margin="23,12,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16" FontFamily="Segoe UI Light" VerticalContentAlignment="Center" IsHitTestVisible="False"/>
 
-            <Rectangle x:Name="rect_settings" Height="40" Margin="-8,52,12,0" VerticalAlignment="Top" Fill="#AF33333A" RadiusX="4" RadiusY="4" MouseDown="rect_settings_MouseDown"/>
+            <Rectangle x:Name="rect_settings" Height="40" Margin="-8,52,7,0" VerticalAlignment="Top" Fill="#AF33333A" RadiusX="4" RadiusY="4" MouseDown="rect_settings_MouseDown"/>
             <Label x:Name="label_settings" Content="Settings" Height="40" Margin="23,52,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16" FontFamily="Segoe UI Light" VerticalContentAlignment="Center" IsHitTestVisible="False"/>
 
-            <Rectangle x:Name="rect_console" Height="40" Margin="-8,92,12,0" VerticalAlignment="Top" Fill="#AF33333A" RadiusX="4" RadiusY="4" MouseDown="rect_console_MouseDown"/>
+            <Rectangle x:Name="rect_console" Height="40" Margin="-8,92,7,0" VerticalAlignment="Top" Fill="#AF33333A" RadiusX="4" RadiusY="4" MouseDown="rect_console_MouseDown"/>
             <Label x:Name="label_console" Content="Console" Height="40" Margin="23,92,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16" FontFamily="Segoe UI Light" VerticalContentAlignment="Center" IsHitTestVisible="False"/>
 
             <!--
-                Right Side
+                Right Side (Networks Tab)
             -->
-            
+
+            <Grid x:Name="grid_networks" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Label x:Name="label_network_tab_name" Content="Networks" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="575" Height="32" Foreground="White" FontFamily="Segoe UI Semibold" FontSize="16"/>
+
+            </Grid>
+
+            <!--
+                Right Side (Settings Tab)
+            -->
+
+            <Grid x:Name="grid_settings" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden">
+                <Label x:Name="label_settings_tab_name" Content="Settings" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="575" Height="32" Foreground="White" FontFamily="Segoe UI Semibold" FontSize="16"/>
+
+            </Grid>
+
+            <!--
+                Right Side (Console Tab)
+            -->
+
+            <Grid x:Name="grid_console" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden">
+                <Label x:Name="label_console_tab_name" Content="Console" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="575" Height="32" Foreground="White" FontSize="16" FontFamily="Segoe UI Semibold"/>
+                <TextBox x:Name="textBox" Margin="0,42,0,20" TextWrapping="Wrap" Background="#7F000000" Foreground="White" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" FontFamily="Consolas" IsReadOnly="True" BorderThickness="0"/>
+
+            </Grid>
+
         </Grid>
     </Grid>
 </Window>

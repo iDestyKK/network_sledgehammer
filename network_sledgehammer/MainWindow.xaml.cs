@@ -85,7 +85,7 @@ namespace Network_Sledgehammer {
 		// Tab Interaction                                                 {{{1
 		// --------------------------------------------------------------------
 
-		private Dictionary<string, Rectangle> tab_rect;
+		private Dictionary<string, KeyValuePair<Rectangle, Grid> > tab_rect;
 		private SolidColorBrush brush_active, brush_inactive;
 
 		/*
@@ -102,10 +102,16 @@ namespace Network_Sledgehammer {
 				return;
 
 			//Adjust visibility accordingly
-			foreach (KeyValuePair<string, Rectangle> obj in tab_rect) {
-				obj.Value.Fill = (id == obj.Key)
+			foreach (KeyValuePair<string, KeyValuePair<Rectangle, Grid> > obj in tab_rect) {
+				//Tab Roundrect
+				obj.Value.Key.Fill = (id == obj.Key)
 					? brush_active
 					: brush_inactive;
+
+				//Grid
+				obj.Value.Value.Visibility = (id == obj.Key)
+					? Visibility.Visible
+					: Visibility.Hidden;
 			}
 		}
 
@@ -124,10 +130,10 @@ namespace Network_Sledgehammer {
 				new BrushConverter().ConvertFromString("#00000000");
 
 			//Populate Dictionary
-			tab_rect = new Dictionary<string, Rectangle>();
-			tab_rect.Add("networks", rect_networks);
-			tab_rect.Add("settings", rect_settings);
-			tab_rect.Add("console", rect_console);
+			tab_rect = new Dictionary<string, KeyValuePair<Rectangle, Grid> >();
+			tab_rect.Add("networks", new KeyValuePair<Rectangle, Grid>(rect_networks, grid_networks));
+			tab_rect.Add("settings", new KeyValuePair<Rectangle, Grid>(rect_settings, grid_settings));
+			tab_rect.Add("console" , new KeyValuePair<Rectangle, Grid>(rect_console , grid_console ));
 
 			tab_switch("networks");
 		}
