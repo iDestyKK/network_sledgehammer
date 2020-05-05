@@ -1,0 +1,135 @@
+﻿<Window x:Class="Network_Sledgehammer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Network_Sledgehammer"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="461" Width="840" WindowStyle="None"
+        ResizeMode="CanResizeWithGrip" AllowsTransparency="True" Loaded="Window_Loaded" Background="Transparent">
+    <Grid>
+        <!--
+            Title Bar
+        -->
+        
+        <!-- Background -->
+        <Rectangle Fill="#FF0D0D10" Height="32" VerticalAlignment="Top" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
+
+        <!-- Minimise Button -->
+        <Button x:Name="button_minimise" Content="" HorizontalAlignment="Right" Margin="0,0,46,0" VerticalAlignment="Top" Width="46" Height="32" Background="#00000000" BorderBrush="{x:Null}" Click="button_minimise_Click">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Background" Value="LightBlue" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="Border" Background="{TemplateBinding Background}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#2FFFFFFF" TargetName="Border" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Style>
+        </Button>
+        
+        <!-- Minimise Button Icon -->
+        <Rectangle IsHitTestVisible="False" Fill="#FFF4F4F5" HorizontalAlignment="Right" Height="1" Margin="0,16,64,0" VerticalAlignment="Top" Width="10" RenderTransformOrigin="0.5,0.5">
+            <Rectangle.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="-1"/>
+                    <SkewTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Rectangle.RenderTransform>
+        </Rectangle>
+
+        <!-- Close Button -->
+        <Button x:Name="button_close" Content="" HorizontalAlignment="Right" VerticalAlignment="Top" Width="46" Height="32" BorderBrush="{x:Null}" Background="#00000000" Click="button_close_Click">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Background" Value="LightBlue" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="Border" Background="{TemplateBinding Background}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#FFFF0000" TargetName="Border" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Style>
+        </Button>
+        
+        <!-- Close Button Icon -->
+        <Rectangle IsHitTestVisible="False" Fill="#FFF4F4F5" HorizontalAlignment="Right" Height="1" Margin="0,15,15,0" VerticalAlignment="Top" Width="14" RenderTransformOrigin="0.5,0.5">
+            <Rectangle.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="-1"/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="45"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Rectangle.RenderTransform>
+        </Rectangle>
+
+        <Rectangle IsHitTestVisible="False" Fill="#FFF4F4F5" HorizontalAlignment="Right" Height="1" Margin="0,15,15,0" VerticalAlignment="Top" Width="14" RenderTransformOrigin="0.5,0.5">
+            <Rectangle.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="-1"/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="135"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Rectangle.RenderTransform>
+        </Rectangle>
+
+        <!-- Title -->
+        <Label x:Name="label_name" Content="Network Sledgehammer" Height="32" Margin="6,0,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Segoe UI Light" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="14" IsHitTestVisible="False"/>
+
+        <Grid Margin="0,32,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="240" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Let it be resized (if you need that for some reason...) -->
+            <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" Background="#FF17171A" />
+
+            <!--
+                Left Side
+            -->
+            
+            <Rectangle Fill="#EF17171A" Width="Auto"/>
+
+            <!-- Tabs -->
+            <Rectangle Grid.Column="2" Fill="#FF17171A"/>
+
+            <Rectangle x:Name="rect_networks" Height="40" Margin="-8,12,12,0" VerticalAlignment="Top" Fill="#AF33333A" RadiusX="4" RadiusY="4" MouseDown="rect_networks_MouseDown"/>
+            <Label x:Name="label_networks" Content="Networks" Height="40" Margin="23,12,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16" FontFamily="Segoe UI Light" VerticalContentAlignment="Center" IsHitTestVisible="False"/>
+
+            <Rectangle x:Name="rect_settings" Height="40" Margin="-8,52,12,0" VerticalAlignment="Top" Fill="#AF33333A" RadiusX="4" RadiusY="4" MouseDown="rect_settings_MouseDown"/>
+            <Label x:Name="label_settings" Content="Settings" Height="40" Margin="23,52,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16" FontFamily="Segoe UI Light" VerticalContentAlignment="Center" IsHitTestVisible="False"/>
+
+            <Rectangle x:Name="rect_console" Height="40" Margin="-8,92,12,0" VerticalAlignment="Top" Fill="#AF33333A" RadiusX="4" RadiusY="4" MouseDown="rect_console_MouseDown"/>
+            <Label x:Name="label_console" Content="Console" Height="40" Margin="23,92,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16" FontFamily="Segoe UI Light" VerticalContentAlignment="Center" IsHitTestVisible="False"/>
+
+            <!--
+                Right Side
+            -->
+            
+        </Grid>
+    </Grid>
+</Window>
