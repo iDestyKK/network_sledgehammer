@@ -13,7 +13,8 @@ the background. Easy.
 
 ## Compilation Instruction
 This project requires the **managedwifi** package. Open the project in Visual
-Studio and open up the NuGet console. Type in the following command:
+Studio, then go to **Tools** -\> **NuGet Package Manager** -\> **Package
+Manager Console**. Type in the following command:
 ```
 Install-Package managedwifi
 ```
