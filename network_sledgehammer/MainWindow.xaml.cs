@@ -16,9 +16,13 @@ using System.Windows.Shapes;
 using System.Windows.Interop;
 using System.Security.Policy;
 using NativeWifi;
+using network_sledgehammer;
 
 namespace Network_Sledgehammer {
 	public partial class MainWindow : Window {
+
+		/* helper classes */
+		private net_func net_util;
 
 		// --------------------------------------------------------------------
 		// Windows 10 Blur Behind Hack                                     {{{1
@@ -80,157 +84,6 @@ namespace Network_Sledgehammer {
 			SetWindowCompositionAttribute(windowHelper.Handle, ref data);
 
 			Marshal.FreeHGlobal(accentPtr);
-		}
-
-		// --------------------------------------------------------------------
-		// Network Functionality                                           {{{1
-		// --------------------------------------------------------------------
-
-		/*
-		 * Functions/Variables for dealing with the network.
-		 */
-
-		//Data Structures
-		private Wlan.WlanAvailableNetwork[] networks;
-		private WlanClient                  client;
-		private WlanClient.WlanInterface[]  interfaces;
-
-		//Cache existing profile information
-		private Dictionary<
-			WlanClient.WlanInterface, Dictionary<string, string> > interface_profile;
-
-		static string GetStringForSSID(Wlan.Dot11Ssid ssid) {
-			return Encoding.ASCII.GetString(ssid.SSID, 0, (int)ssid.SSIDLength);
-		}
-
-		/*
-		 * network_init
-		 * 
-		 * Sets up the network variables to default values. Run this in the
-		 * Window's constructor.
-		 */
-
-		private void network_init() {
-			client = new WlanClient();
-
-			interface_profile = new Dictionary<
-				WlanClient.WlanInterface, Dictionary<string, string> >();
-		}
-
-		/*
-		 * network_update_adapter
-		 * 
-		 * Updates network adapter data structures to hold recent information.
-		 */
-
-		private void network_update_adapter(ComboBox cb, ComboBox cb_ap) {
-			//Wipe out "cb"'s information
-			cb.Items.Clear();
-			cb.SelectedItem = null;
-
-			//Since "cb" was cleared out, "cb_ap" also needs to be cleared out.
-			cb_ap.Items.Clear();
-			cb_ap.SelectedItem = null;
-
-			//Clear out data structures as well
-			interface_profile.Clear();
-
-			interfaces = client.Interfaces;
-
-			foreach (WlanClient.WlanInterface mw_inter in interfaces) {
-				cb.Items.Add(mw_inter.InterfaceName);
-
-				interface_profile.Add(mw_inter, new Dictionary<string, string>());
-
-				//Add profiles to the cache
-				foreach (Wlan.WlanProfileInfo pinf in mw_inter.GetProfiles()) {
-					interface_profile[mw_inter].Add(
-						pinf.profileName,
-						mw_inter.GetProfileXml(pinf.profileName)
-					);
-				}
-			}
-		}
-
-		/*
-		 * network_update_access_point
-		 * 
-		 * Updates access points available in the access point combobox. This
-		 * requires information from the Adapter Combobox "cb" to modify the
-		 * Access Point Combobox "cb_ap".
-		 */
-
-		private void network_update_access_point(ComboBox cb, ComboBox cb_ap) {
-			//Invalid/none item being selected
-			if (cb.SelectedIndex == -1)
-				return;
-
-			//Wipe out "cb_ap"'s information
-			cb_ap.Items.Clear();
-			cb_ap.SelectedItem = null;
-
-			//Ok, get all access points and populate "cb_ap".
-			interfaces[cb.SelectedIndex].Scan();
-			networks = interfaces[cb.SelectedIndex].GetAvailableNetworkList(0);
-
-			foreach (Wlan.WlanAvailableNetwork network in networks)
-				cb_ap.Items.Add(GetStringForSSID(network.dot11Ssid));
-		}
-
-		/*
-		 * network_try_connect
-		 * 
-		 * Try to connect to a Wifi Access Point. This relies on the interface
-		 * specified in "cb" as well as the access point specified in "cb_ap".
-		 * If they are not specified properly or the Wi-Fi profile does not
-		 * exist, the command will fail with an appropriate error code
-		 * returned.
-		 */
-
-		private int network_try_connect(ComboBox cb, ComboBox cb_ap) {
-			WlanClient.WlanInterface mw_inter;
-			Wlan.WlanAvailableNetwork network;
-			string ssid, prof_name, prof_xml;
-
-			//Invalid adapter
-			if (cb.SelectedIndex == -1)
-				return 1;
-
-			//Invalid access point
-			if (cb_ap.SelectedIndex == -1)
-				return 2;
-
-			mw_inter = interfaces[cb   .SelectedIndex];
-			network  = networks  [cb_ap.SelectedIndex];
-			ssid     = GetStringForSSID(network.dot11Ssid);
-
-			//Profile doesn't exist
-			if (!interface_profile[mw_inter].ContainsKey(ssid))
-				return 3;
-
-			//Ok, time to connect
-			prof_name = ssid;
-			prof_xml  = interface_profile[mw_inter][ssid];
-
-			try {
-				mw_inter.SetProfile(
-					Wlan.WlanProfileFlags.AllUser,
-					prof_xml,
-					true
-				);
-
-				mw_inter.Connect(
-					Wlan.WlanConnectionMode.Profile,
-					Wlan.Dot11BssType.Any,
-					prof_name
-				);
-			}
-			catch (Exception e) {
-				/* A VERY bad idea but whatever */
-			}
-
-			//Ok... assume it worked.
-			return 0;
 		}
 
 		// --------------------------------------------------------------------
@@ -299,13 +152,13 @@ namespace Network_Sledgehammer {
 
 			//Run any other setup functions needed
 			tab_init();
-			network_init();
+			net_util = new net_func();
+
+			net_util.setup_interface_combobox   (combobox_network_interfaces   );
+			net_util.setup_access_point_combobox(combobox_network_access_points);
 
 			//p sweet tbh
-			network_update_adapter(
-				combobox_network_interfaces,
-				combobox_network_access_points
-			);
+			net_util.update_adapter();
 		}
 
 		private void Window_Loaded(object sender, RoutedEventArgs e) {
@@ -333,17 +186,11 @@ namespace Network_Sledgehammer {
 		}
 
 		private void combobox_network_interfaces_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-			network_update_access_point(
-				combobox_network_interfaces,
-				combobox_network_access_points
-			);
+			net_util.update_access_point();
 		}
 
 		private void button_connect_Click(object sender, RoutedEventArgs e) {
-			int result = network_try_connect(
-				combobox_network_interfaces,
-				combobox_network_access_points
-			);
+			int result = net_util.try_connect();
 
 			switch (result) {
 				case 0:
