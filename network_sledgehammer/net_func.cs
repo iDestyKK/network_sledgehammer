@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 using NativeWifi;
 
 namespace network_sledgehammer {
-    class net_func {
+	class net_func {
 		//Data Structures
 		private Wlan.WlanAvailableNetwork[] networks;
 		private WlanClient client;
