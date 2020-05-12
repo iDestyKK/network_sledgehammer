@@ -12,10 +12,7 @@ try to ping (e.g. `www.google.com`), and a frequency to ping. Let it run in
 the background. Easy.
 
 ## Compilation Instruction
-This project requires the **managedwifi** package. Open the project in Visual
-Studio, then go to **Tools** -\> **NuGet Package Manager** -\> **Package
-Manager Console**. Type in the following command:
-```
-Install-Package managedwifi
-```
-After that, simply click "Run" and you're good to go.
+This project includes the source code of **managedwifi**, as the NuGet version
+has a bug that crashes the program upon connection to an access point. This
+means you don't need to add any additional packages to the project to have it
+compiled. Just click "Run" and you're good to go.
