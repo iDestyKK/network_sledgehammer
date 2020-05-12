@@ -150,6 +150,14 @@ namespace Network_Sledgehammer {
 		public MainWindow() {
 			InitializeComponent();
 
+			//Setup config form fields
+			config.textbox_ping_url = textBox_url;
+			config.textbox_attempts = textBox_attempts;
+			config.textbox_delay    = textBox_delay;
+
+			//Load configuration file (or create if it doesn't exist)
+			config.load_config("config.txt");
+
 			//Run any other setup functions needed
 			tab_init();
 			net_util = new net_func();
@@ -217,6 +225,10 @@ namespace Network_Sledgehammer {
 					);
 					break;
 			}
+		}
+
+		private void button_save_Click(object sender, RoutedEventArgs e) {
+			config.save_config("config.txt");
 		}
 
 		private void rect_console_MouseDown(object sender, MouseButtonEventArgs e) {
