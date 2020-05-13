@@ -65,9 +65,9 @@ namespace network_sledgehammer {
 
 			//fight some stupid race condition i guess
 			dis_obj.Invoke(() => {
-					textbox_log.Text += line;
-					textbox_log.ScrollToEnd();
-					});
+				textbox_log.Text += line;
+				textbox_log.ScrollToEnd();
+			});
 		}
 	}
 }
