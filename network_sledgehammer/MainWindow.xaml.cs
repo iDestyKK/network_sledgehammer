@@ -41,51 +41,50 @@ namespace Network_Sledgehammer {
 		 */
 
 		private bool test_connection() {
-			int result = net_util.try_connect();
+			int    result;
+			string error_str;
+
+			result    = net_util.try_connect();
+			error_str = "";
 
 			switch (result) {
 				case 0:
 					//Success
 					break;
+
 				case 1:
 					//Invalid Interface
-					MessageBox.Show(
-						"Error: Interface is not set or is invalid.",
-						"Error",
-						MessageBoxButton.OK,
-						MessageBoxImage.Error
-					);
+					error_str = "Error: Interface is not set or is invalid.";
 					break;
+
 				case 2:
 					//Invalid Access Point
-					MessageBox.Show(
-						"Error: Access Point is not set or is invalid.",
-						"Error",
-						MessageBoxButton.OK,
-						MessageBoxImage.Error
-					);
+					error_str =
+						"Error: Access Point is not set or is invalid.";
 					break;
+
 				case 3:
 					//Access Point has no existing profile
-					MessageBox.Show(
+					error_str =
 						"Error: Access Point has no profile set. Connect to " +
 						"this Wi-Fi network through Windows first. Then try " +
-						"to connect through this.",
-						"Error",
-						MessageBoxButton.OK,
-						MessageBoxImage.Error
-					);
+						"to connect through this.";
 					break;
+
 				case 4:
 					//Failed to establish connection
-					MessageBox.Show(
+					error_str =
 						"Error: Failed to establish connection in time. " +
-						"Timed out after 5 seconds.",
-						"Error",
-						MessageBoxButton.OK,
-						MessageBoxImage.Error
-					);
+						"Timed out after 5 seconds.";
 					break;
+			}
+
+			if (result > 0) {
+				//Show error message box
+				MessageBox.Show(
+					error_str, "Error",
+					MessageBoxButton.OK, MessageBoxImage.Error
+				);
 			}
 
 			return (result == 0);
