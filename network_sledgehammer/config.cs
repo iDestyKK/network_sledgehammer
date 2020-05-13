@@ -117,6 +117,7 @@ namespace network_sledgehammer {
 
 		public static bool load_config(string path) {
 			string line;
+			int mask;
 			StreamReader fp;
 
 			if (!File.Exists(path)) {
@@ -126,7 +127,7 @@ namespace network_sledgehammer {
 			try {
 				fp = new StreamReader(path);
 				line = fp.ReadLine(); textbox_ping_url.Text = line;
-				line = fp.ReadLine(); textbox_delay.Text = line;
+				line = fp.ReadLine(); textbox_delay   .Text = line;
 				line = fp.ReadLine(); textbox_attempts.Text = line;
 				fp.Close();
 			}
@@ -135,7 +136,31 @@ namespace network_sledgehammer {
 				return false;
 			}
 
+			/*
+			 * If invalid data was read in, force the default settings to
+			 * override and load that instead.
+			 */
+
+			mask = is_valid();
+
+			if (mask != 0) {
+				create_default_config(path);
+				load_config(path);
+
+				MessageBox.Show(
+					"Configuration file has errors:\n" + error_string(mask) +
+					"\n\nThe default configuration has been loaded instead.",
+					"Errors found",
+					MessageBoxButton.OK,
+					MessageBoxImage.Error
+				);
+			}
+
 			//Assume it worked tbh.
+			ping_url      = textbox_ping_url.Text;
+			attempt_delay = Convert.ToInt32(textbox_delay.Text);
+			attempts      = Convert.ToInt32(textbox_attempts.Text);
+
 			return true;
 		}
 
@@ -178,6 +203,11 @@ namespace network_sledgehammer {
 				/* a VERY bad idea */
 				return false;
 			}
+
+			//Set the variables as well.
+			ping_url = textbox_ping_url.Text;
+			attempt_delay = Convert.ToInt32(textbox_delay.Text);
+			attempts = Convert.ToInt32(textbox_attempts.Text);
 
 			return true;
 		}
