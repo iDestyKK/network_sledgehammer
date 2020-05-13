@@ -258,6 +258,9 @@ namespace Network_Sledgehammer {
 			tab_rect.Add("console" , new KeyValuePair<Rectangle, Grid>(
 				rect_console , grid_console ));
 
+			tab_rect.Add("about", new KeyValuePair<Rectangle, Grid>(
+				rect_about   , grid_about));
+
 			//Default is the "networks" tab.
 			tab_switch("networks");
 		}
@@ -328,6 +331,10 @@ namespace Network_Sledgehammer {
 
 		private void rect_settings_MouseDown(object sender, MouseButtonEventArgs e) {
 			tab_switch("settings");
+		}
+
+		private void rect_about_MouseDown(object sender, MouseButtonEventArgs e) {
+			tab_switch("about");
 		}
 
 		private void button_minimise_Click(object sender, RoutedEventArgs e) {
