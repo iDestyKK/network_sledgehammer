@@ -40,7 +40,7 @@ namespace network_sledgehammer {
 		private static bool create_default_config(string path) {
 			try {
 				StreamWriter fp = new StreamWriter(path);
-				fp.WriteLine("");
+				fp.WriteLine("https://www.google.com");
 				fp.WriteLine(2000);
 				fp.WriteLine(3);
 				fp.Close();

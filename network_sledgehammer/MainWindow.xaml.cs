@@ -19,6 +19,8 @@ using System.Windows.Interop;
 using System.Security.Policy;
 using NativeWifi;
 using network_sledgehammer;
+using System.Reflection;
+using System.Diagnostics;
 
 namespace Network_Sledgehammer {
 	public partial class MainWindow : Window {
@@ -258,6 +260,9 @@ namespace Network_Sledgehammer {
 			tab_rect.Add("console" , new KeyValuePair<Rectangle, Grid>(
 				rect_console , grid_console ));
 
+			tab_rect.Add("about", new KeyValuePair<Rectangle, Grid>(
+				rect_about   , grid_about));
+
 			//Default is the "networks" tab.
 			tab_switch("networks");
 		}
@@ -271,7 +276,16 @@ namespace Network_Sledgehammer {
 		                        brush_sh_on_fg, brush_sh_off_fg;
 
 		public MainWindow() {
+			Assembly assem;
+			string ver;
+
 			InitializeComponent();
+
+			//Fill in version number
+			assem = Assembly.GetExecutingAssembly();
+			ver = FileVersionInfo.GetVersionInfo(assem.Location).FileVersion;
+			ver = ver.Substring(0, ver.LastIndexOf('.'));
+			version_num.Text = ver;
 
 			//Setup logger
 			log.setup_dispatcher(this.Dispatcher);
@@ -328,6 +342,10 @@ namespace Network_Sledgehammer {
 
 		private void rect_settings_MouseDown(object sender, MouseButtonEventArgs e) {
 			tab_switch("settings");
+		}
+
+		private void rect_about_MouseDown(object sender, MouseButtonEventArgs e) {
+			tab_switch("about");
 		}
 
 		private void button_minimise_Click(object sender, RoutedEventArgs e) {
