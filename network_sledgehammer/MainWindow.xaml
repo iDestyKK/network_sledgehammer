@@ -222,8 +222,8 @@
                 <TextBlock TextWrapping="WrapWithOverflow" Margin="15,179,0,0" Foreground="White" FontFamily="Segoe UI Semibold" FontSize="14" VerticalAlignment="Top" HorizontalAlignment="Left">
                     Last Updated:
                 </TextBlock>
-                <TextBlock TextWrapping="WrapWithOverflow" Margin="112,155,0,0" Foreground="White" FontFamily="Segoe UI Light" FontSize="14" VerticalAlignment="Top" HorizontalAlignment="Left">
-                    0.0.1
+                <TextBlock x:Name="version_num" TextWrapping="WrapWithOverflow" Margin="112,155,0,0" Foreground="White" FontFamily="Segoe UI Light" FontSize="14" VerticalAlignment="Top" HorizontalAlignment="Left">
+                    x.x.x
                 </TextBlock>
                 <TextBlock TextWrapping="WrapWithOverflow" Margin="112,179,0,0" Foreground="White" FontFamily="Segoe UI Light" FontSize="14" VerticalAlignment="Top" HorizontalAlignment="Left">
                     2020/05/13
@@ -231,7 +231,8 @@
                 <Label x:Name="label_about_tab_changelog" Content="Changelog" HorizontalAlignment="Left" Margin="10,228,0,0" VerticalAlignment="Top" Width="575" Height="32" Foreground="White" FontSize="16" FontFamily="Segoe UI Semibold"/>
                 
                 <!-- This won't be pretty... -->
-                <TextBox x:Name="textBox_changelog" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" xml:space="preserve" Margin="0,260,0,20" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Background="#7F000000" Foreground="White" IsReadOnly="True" AcceptsReturn="True" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" FontFamily="Segoe UI Light" FontSize="13" BorderThickness="0">0.0.1 (2020/05/13)
+                <TextBox x:Name="textBox_changelog" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" xml:space="preserve" Margin="0,260,0,20" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Background="#7F000000" Foreground="White" IsReadOnly="True" AcceptsReturn="True" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" FontFamily="Segoe UI Light" FontSize="13" BorderThickness="0"
+>0.1.0 (2020/05/13)
  - Initial Release
                 </TextBox>
 

@@ -19,6 +19,8 @@ using System.Windows.Interop;
 using System.Security.Policy;
 using NativeWifi;
 using network_sledgehammer;
+using System.Reflection;
+using System.Diagnostics;
 
 namespace Network_Sledgehammer {
 	public partial class MainWindow : Window {
@@ -274,7 +276,16 @@ namespace Network_Sledgehammer {
 		                        brush_sh_on_fg, brush_sh_off_fg;
 
 		public MainWindow() {
+			Assembly assem;
+			string ver;
+
 			InitializeComponent();
+
+			//Fill in version number
+			assem = Assembly.GetExecutingAssembly();
+			ver = FileVersionInfo.GetVersionInfo(assem.Location).FileVersion;
+			ver = ver.Substring(0, ver.LastIndexOf('.'));
+			version_num.Text = ver;
 
 			//Setup logger
 			log.setup_dispatcher(this.Dispatcher);
