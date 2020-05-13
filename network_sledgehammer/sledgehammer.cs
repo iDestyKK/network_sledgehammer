@@ -21,7 +21,7 @@ using System.Windows.Threading;
 using Network_Sledgehammer;
 
 namespace network_sledgehammer {
-    class sledgehammer {
+	class sledgehammer {
 		/*
 		 * ping
 		 * 
