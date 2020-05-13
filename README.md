@@ -12,10 +12,18 @@ try to ping (e.g. `https://www.google.com`), and a frequency to ping. Let it
 run in the background. Easy.
 
 ## Compilation Instruction
-Just open the project in Visual Studio and run it. Easy.
+This project uses the **Costura.Fody** package to embed resources into the
+final executable (like `ManagedWifi.dll`...). To install this, Open the project
+in Visual Studio, then go to **Tools** -\> **NuGet Package Manager** -\>
+**Package Manager Console**. Type in the following command:
+```
+Install-Package Costura.Fody
+```
+Afterwards, just compile the project and it'll run. Easy.
 
-## External Dependencies
+## External Dependencies (ManagedWifi)
 This project includes the source code of **managedwifi**, as the NuGet version
 has a bug that crashes the program upon connection to an access point. This
-means you don't need to add any additional packages to the project to have it
-compiled. Just click "Run" and you're good to go.
+means you don't need to add an additional NuGet package to the project to have
+it compiled. Just click "Run" and you're good to go. License JSON is available
+in the `ManagedWifi` directory straight from the source code release.
