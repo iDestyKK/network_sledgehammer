@@ -112,6 +112,8 @@ namespace network_sledgehammer {
 		 */
 
 		public void update_access_point() {
+			string ssid;
+
 			//Invalid/none item being selected
 			if (cb_interfaces.SelectedIndex == -1)
 				return;
@@ -124,8 +126,14 @@ namespace network_sledgehammer {
 			interfaces[cb_interfaces.SelectedIndex].Scan();
 			networks = interfaces[cb_interfaces.SelectedIndex].GetAvailableNetworkList(0);
 
-			foreach (Wlan.WlanAvailableNetwork network in networks)
-				cb_access_points.Items.Add(GetStringForSSID(network.dot11Ssid));
+			foreach (Wlan.WlanAvailableNetwork network in networks) {
+				ssid = GetStringForSSID(network.dot11Ssid);
+
+				cb_access_points.Items.Add((ssid == "")
+					? "Hidden Network"
+					: ssid
+				);
+			}
 		}
 
 		/*
