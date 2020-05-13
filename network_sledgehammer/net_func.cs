@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using NativeWifi;
 
@@ -128,6 +129,59 @@ namespace network_sledgehammer {
 		}
 
 		/*
+		 * try_naive_connect
+		 * 
+		 * "try_connect" without checks with WPF elements.
+		 */
+
+		public int try_naive_connect(int i_id, int ap_id) {
+			WlanClient.WlanInterface mw_inter;
+			Wlan.WlanAvailableNetwork network;
+			string ssid, prof_name, prof_xml;
+			int timeout;
+
+			mw_inter = interfaces[i_id];
+			network = networks[ap_id];
+			ssid = GetStringForSSID(network.dot11Ssid);
+
+			//Profile doesn't exist
+			if (!interface_profile[mw_inter].ContainsKey(ssid))
+				return 3;
+
+			//Ok, time to connect
+			prof_name = ssid;
+			prof_xml = interface_profile[mw_inter][ssid];
+
+			try {
+				mw_inter.SetProfile(
+					Wlan.WlanProfileFlags.AllUser,
+					prof_xml,
+					true
+				);
+
+				mw_inter.Connect(
+					Wlan.WlanConnectionMode.Profile,
+					Wlan.Dot11BssType.Any,
+					prof_name
+				);
+
+				//Give adapter time to connect (5 seconds)
+				timeout = 5000;
+
+				while (mw_inter.InterfaceState.ToString() != "Connected" && timeout >= 0) {
+					Thread.Sleep(500);
+					timeout -= 500;
+				}
+			}
+			catch (Exception e) {
+				/* A VERY bad idea but whatever */
+			}
+
+			//Ok... if connected, it worked. If not, well... return 4.
+			return (mw_inter.InterfaceState.ToString() == "Connected") ? 0 : 4;
+		}
+
+		/*
 		 * try_connect
 		 * 
 		 * Try to connect to a Wifi Access Point. This relies on the interface
@@ -141,6 +195,7 @@ namespace network_sledgehammer {
 			WlanClient.WlanInterface mw_inter;
 			Wlan.WlanAvailableNetwork network;
 			string ssid, prof_name, prof_xml;
+			int timeout;
 
 			//Invalid adapter
 			if (cb_interfaces.SelectedIndex == -1)
@@ -174,13 +229,21 @@ namespace network_sledgehammer {
 					Wlan.Dot11BssType.Any,
 					prof_name
 				);
+
+				//Give adapter time to connect (5 seconds)
+				timeout = 5000;
+
+				while (mw_inter.InterfaceState.ToString() != "Connected" && timeout >= 0) {
+					Thread.Sleep(500);
+					timeout -= 500;
+				}
 			}
 			catch (Exception e) {
 				/* A VERY bad idea but whatever */
 			}
 
-			//Ok... assume it worked.
-			return 0;
+			//Ok... if connected, it worked. If not, well... return 4.
+			return (mw_inter.InterfaceState.ToString() == "Connected") ? 0 : 4;
 		}
 	}
 }
