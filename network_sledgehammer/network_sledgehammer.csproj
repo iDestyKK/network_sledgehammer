@@ -101,7 +101,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Downloads\Data\managedwifi\sourceCode\sourceCode\ManagedWifi.csproj">
+    <ProjectReference Include="..\ManagedWifi\ManagedWifi.csproj">
       <Project>{6aa425c9-ea6a-4b01-aaed-5ff122e8b663}</Project>
       <Name>ManagedWifi</Name>
     </ProjectReference>
