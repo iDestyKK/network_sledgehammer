@@ -61,16 +61,22 @@ namespace network_sledgehammer {
 			while (true) {
 				for (i = 0; i < config.attempts; i++) {
 					//Let's see here...
-					log.write("Pinging " + config.ping_url + "... ");
+					//log.write("Pinging " + config.ping_url + "... ");
 
 					res = ping(config.ping_url, 1000);
 
-					log.write(res ? "Success\n" : "Failure\n");
+					//log.write(res ? "Success\n" : "Failure\n", false);
 
 					if (!res) {
 						//If last try, force a reconnection.
-						if (i == config.attempts - 1)
+						if (i == config.attempts - 1) {
+							log.write(
+								"Failed to ping " + config.attempts + " " +
+								"times. Reconnecting.\n"
+							);
+
 							net_util.try_naive_connect(i_id, ap_id);
+						}
 					}
 					else
 						break;
