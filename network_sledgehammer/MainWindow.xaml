@@ -135,7 +135,7 @@
                 Right Side (Networks Tab)
             -->
 
-            <Grid x:Name="grid_networks" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden">
+            <Grid x:Name="grid_networks" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Label x:Name="label_network_tab_name" Content="Networks" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="575" Height="32" Foreground="White" FontFamily="Segoe UI Semibold" FontSize="16"/>
 
                 <!-- Wi-Fi Device -->
@@ -200,14 +200,18 @@
 
             <Grid x:Name="grid_console" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden">
                 <Label x:Name="label_console_tab_name" Content="Console" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="575" Height="32" Foreground="White" FontSize="16" FontFamily="Segoe UI Semibold"/>
-                <TextBox x:Name="textBox_console" Margin="0,42,0,20" TextWrapping="Wrap" Background="#7F000000" Foreground="White" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" FontFamily="Consolas" IsReadOnly="True" BorderThickness="0"/>
+                <TextBox x:Name="textBox_console" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" Margin="0,42,0,40" TextWrapping="Wrap" Background="#7F000000" Foreground="White" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" FontFamily="Consolas" IsReadOnly="True" BorderThickness="0"/>
+
+                <Rectangle Fill="#3F000000" HorizontalAlignment="Stretch" Height="40" Margin="0,0,0,0" VerticalAlignment="Bottom"/>
+                <Button x:Name="button_clear_console" Content="Clear Console" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="108" Background="#FF202023" Foreground="White" BorderBrush="#FF424242" Click="button_clear_console_Click"/>
+                <Button x:Name="button_save_console" Content="Save to File" HorizontalAlignment="Left" Margin="128,0,0,10" VerticalAlignment="Bottom" Width="108" Background="#FF202023" Foreground="White" BorderBrush="#FF424242" Click="button_save_console_Click"/>
             </Grid>
 
             <!--
                 Right Side (About Tab)
             -->
 
-            <Grid x:Name="grid_about" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid x:Name="grid_about" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden">
                 <Label x:Name="label_about_tab_name" Content="About" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="575" Height="32" Foreground="White" FontSize="16" FontFamily="Segoe UI Semibold"/>
                 <TextBlock TextWrapping="WrapWithOverflow" Margin="15,48,15,15" Foreground="White" FontFamily="Segoe UI Light" FontSize="14" VerticalAlignment="Top">
                     <Run Text="Network Sledgehammer is a tool that automates reconnecting to a Wi-Fi access point upon detecting a disconnection. This is a last resort tool for when you have no other choice (Bad network adapter, no up-to-date drivers, etc) and need a nearly constant Internet connection."/>
@@ -226,16 +230,20 @@
                     x.x.x
                 </TextBlock>
                 <TextBlock TextWrapping="WrapWithOverflow" Margin="112,179,0,0" Foreground="White" FontFamily="Segoe UI Light" FontSize="14" VerticalAlignment="Top" HorizontalAlignment="Left">
-                    2020/05/13
+                    2020/05/14
                 </TextBlock>
                 <Label x:Name="label_about_tab_changelog" Content="Changelog" HorizontalAlignment="Left" Margin="10,228,0,0" VerticalAlignment="Top" Width="575" Height="32" Foreground="White" FontSize="16" FontFamily="Segoe UI Semibold"/>
-                
+
+                <Rectangle Fill="#7F000000" Margin="0,260,0,20" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
                 <!-- This won't be pretty... -->
-                <TextBox x:Name="textBox_changelog" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" xml:space="preserve" Margin="0,260,0,20" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Background="#7F000000" Foreground="White" IsReadOnly="True" AcceptsReturn="True" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" FontFamily="Segoe UI Light" FontSize="13" BorderThickness="0"
->0.1.0 (2020/05/13)
+                <TextBox x:Name="textBox_changelog" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" xml:space="preserve" Margin="15,260,0,20" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Background="#00000000" Foreground="White" IsReadOnly="True" AcceptsReturn="True" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" FontFamily="Segoe UI Light" FontSize="13" BorderThickness="0"
+>0.2.0 (2020/05/14)
+ - Less verbose logging. Added options to clear and save console output too.
+                    
+0.1.0 (2020/05/13)
  - Initial Release
                 </TextBox>
-
             </Grid>
         </Grid>
     </Grid>

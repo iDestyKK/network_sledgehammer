@@ -21,6 +21,7 @@ using NativeWifi;
 using network_sledgehammer;
 using System.Reflection;
 using System.Diagnostics;
+using System.IO;
 
 namespace Network_Sledgehammer {
 	public partial class MainWindow : Window {
@@ -285,6 +286,12 @@ namespace Network_Sledgehammer {
 			assem = Assembly.GetExecutingAssembly();
 			ver = FileVersionInfo.GetVersionInfo(assem.Location).FileVersion;
 			ver = ver.Substring(0, ver.LastIndexOf('.'));
+
+			//If compiled with "DEBUG", let the user know this is a debug build
+			#if DEBUG
+				ver += " (debug)";
+			#endif
+
 			version_num.Text = ver;
 
 			//Setup logger
@@ -356,6 +363,28 @@ namespace Network_Sledgehammer {
 			//If closing while the thread is doing work, just obliterate it.
 			if (sh_on)
 				thd_sh.Abort();
+		}
+
+		private void button_clear_console_Click(object sender, RoutedEventArgs e) {
+			textBox_console.Text = "";
+		}
+
+		private void button_save_console_Click(object sender, RoutedEventArgs e) {
+			Microsoft.Win32.SaveFileDialog sv_dialog;
+			
+			sv_dialog = new Microsoft.Win32.SaveFileDialog();
+
+			//Configure
+			sv_dialog.Title      = "Save console log";
+			sv_dialog.FileName   = "log";
+			sv_dialog.DefaultExt = ".txt";
+			sv_dialog.Filter     = "Text files (.txt)|*.txt";
+
+			Nullable<Boolean> res = sv_dialog.ShowDialog();
+
+			//Dump to file
+			if (res == true)
+				File.WriteAllText(sv_dialog.FileName, textBox_console.Text);
 		}
 
 		private void button_close_Click(object sender, RoutedEventArgs e) {

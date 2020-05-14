@@ -52,19 +52,33 @@ namespace network_sledgehammer {
 		}
 
 		/*
+		 * timestamp
+		 * 
+		 * Prints out the current time. Appended to beginning of a console line
+		 * for telling when something has happened.
+		 */
+
+		public static string timestamp() {
+			return "[" + DateTime.Now.ToString() + "]";
+		}
+
+		/*
 		 * write
 		 * 
 		 * Logs data to "textbox_log" if it's setup. A newline isn't printed in
-		 * addition to the "line" and must be added manually.
+		 * addition to the "line" and must be added manually. This appends a
+		 * timestamp at the beginning unless "w_time" is set to false.
 		 */
 
-		public static void write(string line) {
+		public static void write(string line, bool w_time = true) {
 			//Skip if not set
 			if (textbox_log == null || dis_obj == null)
 				return;
 
 			//fight some stupid race condition i guess
 			dis_obj.Invoke(() => {
+				if (w_time)
+					textbox_log.Text += timestamp() + " ";
 				textbox_log.Text += line;
 				textbox_log.ScrollToEnd();
 			});
