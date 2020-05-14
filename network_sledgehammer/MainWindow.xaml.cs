@@ -286,6 +286,12 @@ namespace Network_Sledgehammer {
 			assem = Assembly.GetExecutingAssembly();
 			ver = FileVersionInfo.GetVersionInfo(assem.Location).FileVersion;
 			ver = ver.Substring(0, ver.LastIndexOf('.'));
+
+			//If compiled with "DEBUG", let the user know this is a debug build
+			#if DEBUG
+				ver += " (debug)";
+			#endif
+
 			version_num.Text = ver;
 
 			//Setup logger
