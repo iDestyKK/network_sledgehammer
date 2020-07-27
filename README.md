@@ -11,6 +11,9 @@ The application is intuitive to use. Just select a Wi-Fi network, an address to
 try to ping (e.g. `https://www.google.com`), and a frequency to ping. Let it
 run in the background. Easy.
 
+## Preview
+![Preview](../assets/assets/preview.png?raw=true)
+
 ## Compilation Instruction
 This project uses the **Costura.Fody** package to embed resources into the
 final executable (like `ManagedWifi.dll`...). To install this, Open the project
