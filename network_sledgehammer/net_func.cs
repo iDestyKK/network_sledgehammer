@@ -186,7 +186,17 @@ namespace network_sledgehammer {
 			}
 
 			//Ok... if connected, it worked. If not, well... return 4.
-			return (mw_inter.InterfaceState.ToString() == "Connected") ? 0 : 4;
+			int state;
+
+			try {
+				state = (mw_inter.InterfaceState.ToString() == "Connected") ? 0 : 4;
+			}
+			catch (Exception e) {
+				//Ok well apparently we can't get the state of things... nice...
+				state = 4;
+			}
+
+			return state;
 		}
 
 		/*
@@ -251,7 +261,17 @@ namespace network_sledgehammer {
 			}
 
 			//Ok... if connected, it worked. If not, well... return 4.
-			return (mw_inter.InterfaceState.ToString() == "Connected") ? 0 : 4;
+			int state;
+
+			try {
+				state = (mw_inter.InterfaceState.ToString() == "Connected") ? 0 : 4;
+			}
+			catch (Exception e) {
+				//Ok well apparently we can't get the state of things... nice...
+				state = 4;
+			}
+
+			return state;
 		}
 	}
 }
