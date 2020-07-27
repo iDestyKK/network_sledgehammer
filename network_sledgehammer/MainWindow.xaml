@@ -230,7 +230,7 @@
                     x.x.x
                 </TextBlock>
                 <TextBlock TextWrapping="WrapWithOverflow" Margin="112,179,0,0" Foreground="White" FontFamily="Segoe UI Light" FontSize="14" VerticalAlignment="Top" HorizontalAlignment="Left">
-                    2020/05/14
+                    2020/07/26
                 </TextBlock>
                 <Label x:Name="label_about_tab_changelog" Content="Changelog" HorizontalAlignment="Left" Margin="10,228,0,0" VerticalAlignment="Top" Width="575" Height="32" Foreground="White" FontSize="16" FontFamily="Segoe UI Semibold"/>
 
@@ -238,7 +238,10 @@
 
                 <!-- This won't be pretty... -->
                 <TextBox x:Name="textBox_changelog" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" xml:space="preserve" Margin="15,260,0,20" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Background="#00000000" Foreground="White" IsReadOnly="True" AcceptsReturn="True" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" FontFamily="Segoe UI Light" FontSize="13" BorderThickness="0"
->0.2.0 (2020/05/14)
+>0.2.1 (2020/07/26)
+ - Fixed a rare crash where device status can't be obtained.
+                    
+0.2.0 (2020/05/14)
  - Less verbose logging. Added options to clear and save console output too.
                     
 0.1.0 (2020/05/13)
